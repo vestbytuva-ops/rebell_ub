@@ -241,3 +241,18 @@ iframe {
   display: block;
 }
 
+/* Grid til kontakter under */
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+
+}
+
+.item {
+  background-color: rgb(236, 228, 228);
+  border-radius: 1px;
+  text-align: center;
+  padding: 10px;
+}
