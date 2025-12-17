@@ -170,13 +170,22 @@ footer {
 }
 
 
-@media (max-width: 768px) {
+@media (max-width: 1000px) {
+  body {
+    overflow-x: hidden;
+    touch-action: pan-y;
+  }
+  
   .hero h1 {
     font-size: 2rem;
   }
 
   header ul {
     gap: 10px;
+  }
+
+  .hero-text {
+    align-self: center;
   }
 }
 
