@@ -1,93 +1,138 @@
 <!DOCTYPE html>
 <html lang="no">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ReBell UB</title>
-    <icon></icon>
-    <link rel="stylesheet" href="rebell_css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ReBell UB</title>
 
+  <link rel="stylesheet" href="rebell_css/style.css">
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    >
 </head>
-<header>
+
 <body>
-   <div class="logo">ReBell UB</div>
-    <nav>
-      <ul>
-        <li><a href="#hjem">Hjem</a></li>
-         <li class="dropdown">
-        <a href="#">Utvalg</a>
+
+<header>
+  <div class="logo">ReBell UB</div>
+  <nav>
+    <ul>
+      <li class="dropdown">
+        <a href="#">Hjem</a>
         <ul class="dropdown-menu">
-          <li><a href="gravelbike-V2.html">Gravelsykkel</a></li>
-          <li><a href="temposykkel-V2.html">Temposykkel</a></li>
-          <li><a href="landveisykkel-V2.html">Landeveisykkel</a></li>
+          <li><a href="omoss.html">Om oss</a></li>
+          <li><a href="#">Slette</a></li>
+          <li><a href="devside.html">DevSide</a></li>
         </ul>
       </li>
-        <li><a href="sykkelsti.html">Ruter</a></li>
-          <li><a href="kontakt.html">Om oss</a></li>
-        <li><a href="devside.html">Dev Side</a></li>
-      
-      </ul>
-    </nav>
-  </header>
+    </ul>
+  </nav>
+</header>
 
-  <section class="hero" id="hjem">
-    <div class="hero-text">
-      <h1>ReBell</h1>
-      <p>High-end kettle-bells laget med resikulert materialer. Ungdomsbedrift fra Ås videregående skole®</p>
-      <a href="#utvalg" class="btn">Se utvalget</a>
-    </div>
-  </section>
+<section class="hero" id="hjem">
+  <div class="hero-text">
+    <h1>ReBell</h1>
+    <p>
+      High-end kettle-bells laget med resikulert materialer.
+      Ungdomsbedrift fra Ås videregående skole®
+    </p>
+    <a href="#utvalg" class="btn">Se utvalget</a>
+  </div>
+</section>
 
-  <section class="products" id="utvalg">
-  <br>
+<section class="products" id="utvalg">
+  <div class="section-inner">
     <h2>Vårt utvalg</h2>
+
     <div class="product-grid">
-       <div class="product-card">
-      <img src="https://fitnessshoppen.no/images/14TUSCL102%202-p.jpg" alt="Produkt 1">
-      <h3>ReBell 2kg</h3>
-      <p>Small</p>
-      <a href="gravelbike-V2.html">Trykk her➤</a>
-      </div>
       <div class="product-card">
-        <img src="https://fitnessshoppen.no/images/14TUSCL104-p.jpg" alt="Produkt 2">
+        <img src="https://fitnessshoppen.no/images/14TUSCL102%202-p.jpg" alt="ReBell 2kg">
+        <h3>ReBell 2kg</h3>
+        <p>Small</p>
+      </div>
+
+      <div class="product-card">
+        <img src="https://fitnessshoppen.no/images/14TUSCL102%202-p.jpg" alt="ReBell 6kg">
         <h3>ReBell 6kg</h3>
         <p>Medium</p>
-        <a href="landveisykkel-V2.html">Trykk her➤</a>
       </div>
-      <div class="product-card"> 
-        <img src="https://fitnessshoppen.no/images/14TUSCL106-p.jpg" alt="Produkt 3">
+
+      <div class="product-card">
+        <img src="https://fitnessshoppen.no/images/14TUSCL106-p.jpg" alt="ReBell 10kg">
         <h3>ReBell 10kg</h3>
         <p>Large</p>
-         <a href="temposykkel-V2.html">Trykk her➤</a>
       </div>
     </div>
-  </section>
-  <div class="promote">
-    <p>Video av produktet.</p>
-    <iframe width="900" height="400" src="https://www.youtube.com/embed/JYKx8r9l6iM?si=vHhoM1cnOPVFrHXA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+  </div>
+</section>
+
+<div class="promote">
+  <p>Video av produktet.</p>
+  <iframe
+    width="900"
+    height="400"
+    src="https://www.youtube.com/embed/JYKx8r9l6iM"
+    title="YouTube video player"
+    allowfullscreen>
+  </iframe>
+</div>
+
+<p>
+  Når du kjøper en kettle-bells fra oss, bidrar du til en mer bærekraftig fremtid...
+</p>
+
+<section class="about" id="om-oss">
+  <h2>Om oss</h2>
+  <p>
+    Vi er to nyskjerrige studenter ved Ås videregående skole...
+  </p>
+</section>
+
+<footer>
+  <div class="socials">
+    <a href="#"><i class="fa-brands fa-youtube"></i></a>
+    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+    <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+    <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
   </div>
 
+  <p>© 2025 SykkelNet. Alle rettigheter reservert.</p>
+</footer>
+
+<!-- PRODUCT MODAL -->
+<div class="product-modal" id="productModal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <img id="modalImage" src="" alt="">
+    <h3 id="modalTitle"></h3>
+    <p id="modalDescription"></p>
+  </div>
+</div>
 
 <script>
-(function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="DQjU2JfGPaesSZNoC5BfY";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();
+  const modal = document.getElementById("productModal");
+
+  document.querySelectorAll(".product-card").forEach(card => {
+    card.addEventListener("click", () => {
+      document.getElementById("modalImage").src =
+        card.querySelector("img").src;
+
+      document.getElementById("modalTitle").innerText =
+        card.querySelector("h3").innerText;
+
+      document.getElementById("modalDescription").innerText =
+        card.querySelector("p").innerText;
+
+      modal.classList.add("active");
+    });
+  });
+
+  document.querySelector(".close").onclick = () => {
+    modal.classList.remove("active");
+  };
+
 </script>
-  <br>
-  <br>
-<p>Når du kjøper en kettle-bells fra oss, bidrar du til en mer bærekraftig fremtid. Våre produkter er laget av resirkulerte materialer, noe som reduserer avfall og sparer ressurser. Ved å velge ReBell UB, tar du et skritt mot en grønnere planet samtidig som du investerer i din egen helse og velvære. Takk for at du støtter vår visjon om en bedre fremtid!</p>
 
-
-  <section class="about" id="om-oss">
-    <h2>Om oss</h2>
-    <p>
-      Vi er to nyskjerrige studenter ved Ås videregående skole som bruker vår kunnskap til å lage sykler som ikke bare brukes til å ha det gøy, men også for å endre fremtiden slik at vi gjør en fordel for miljøet. Alle våre sykler er laget av resikulert carbon-fibre. Karbon (grunnstoff nummer 6) er et ikke-metall som finnes i alt levende og danner grunnlaget for alle organiske stoffer. Det kan binde seg på mange måter, noe som gjør det mulig å danne materialer som diamant, grafitt og karbonfiber. - Tuvarakan og Dino. Vi håper du får en fin opplevelse på vår side.
-  </section>
-
-  <footer>
-    <p>© 2025 SykkelNet. Alle rettigheter reservert.</p>
-  </footer>
 </body>
 </html>
-    
-</body>
-</html>
-

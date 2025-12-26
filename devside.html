@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // Produktadministrasjonssystem for ReBell UB
+
+class ProductManager {
+  constructor() {
+    this.products = this.loadProducts();
+    this.productGrid = document.querySelector('.product-grid');
+    this.init();
+  }
+
+  // Last inn produkter fra localStorage
+  loadProducts() {
+    const saved = localStorage.getItem('rebellProducts');
+    if (saved) {
+      return JSON.parse(saved);
+    }
+    // Standard produkter
+    return [
+      {
+        id: 1,
+        name: 'ReBell 2kg',
+        description: 'Small',
+        image: 'https://fitnessshoppen.no/images/14TUSCL102%202-p.jpg',
+        link: 'gravelbike-V2.html'
+      },
+      {
+        id: 2,
+        name: 'ReBell 6kg',
+        description: 'Medium',
+        image: 'https://fitnessshoppen.no/images/14TUSCL102%202-p.jpg',
+        link: 'gravelbike-V2.html'
+      },
+      {
+        id: 3,
+        name: 'ReBell 10kg',
+        description: 'Large',
+        image: 'https://fitnessshoppen.no/images/14TUSCL106-p.jpg',
+        link: 'gravelbike-V2.html'
+      }
+    ];
+  }
+
+  // Lagre produkter til localStorage
+  saveProducts() {
+    localStorage.setItem('rebellProducts', JSON.stringify(this.products));
+  }
+
+  // Initialiser systemet
+  init() {
+    this.renderProducts();
+    this.createAdminPanel();
+  }
+
+  // Vis alle produkter
+  renderProducts() {
+    if (!this.productGrid) return;
+    
+    this.productGrid.innerHTML = '';
+    this.products.forEach(product => {
+      const productCard = this.createProductCard(product);
+      this.productGrid.appendChild(productCard);
+    });
+  }
+
+  // Lag produktkort
+  createProductCard(product) {
+    const link = document.createElement('a');
+    link.href = product.link;
+    link.className = 'product-link';
+
+    const card = document.createElement('div');
+    card.className = 'product-card';
+    card.dataset.productId = product.id;
+
+    card.innerHTML = `
+      <img src="${product.image}" alt="${product.name}">
+      <h3>${product.name}</h3>
+      <p>${product.description}</p>
+      <div class="admin-buttons" style="display: none; padding: 10px; gap: 10px;">
+        <button onclick="productManager.editProduct(${product.id})" style="background: #3498db; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer;">Rediger</button>
+        <button onclick="productManager.deleteProduct(${product.id})" style="background: #e74c3c; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer;">Slett</button>
+      </div>
+    `;
+
+    link.appendChild(card);
+    return link;
+  }
+
+  // Lag admin-panel
+  createAdminPanel() {
+    // Sjekk om panel allerede eksisterer
+    if (document.getElementById('admin-panel')) return;
+
+    const panel = document.createElement('div');
+    panel.id = 'admin-panel';
+    panel.style.cssText = `
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      z-index: 9999;
+      max-width: 400px;
+    `;
+
+    panel.innerHTML = `
+      <h3 style="margin-bottom: 15px;">Produktadministrasjon</h3>
+      <button id="toggle-admin-mode" style="width: 100%; padding: 10px; background: #2c3e50; color: white; border: none; border-radius: 5px; cursor: pointer; margin-bottom: 10px;">
+        Aktiver redigeringsmodus
+      </button>
+      <button id="add-product-btn" style="width: 100%; padding: 10px; background: #27ae60; color: white; border: none; border-radius: 5px; cursor: pointer; margin-bottom: 10px;">
+        + Legg til nytt produkt
+      </button>
+      <button id="close-admin-panel" style="width: 100%; padding: 10px; background: #95a5a6; color: white; border: none; border-radius: 5px; cursor: pointer;">
+        Lukk panel
+      </button>
+    `;
+
+    document.body.appendChild(panel);
+
+    // Event listeners
+    document.getElementById('toggle-admin-mode').addEventListener('click', () => {
+      this.toggleAdminMode();
+    });
+
+    document.getElementById('add-product-btn').addEventListener('click', () => {
+      this.showProductForm();
+    });
+
+    document.getElementById('close-admin-panel').addEventListener('click', () => {
+      panel.style.display = 'none';
+    });
+
+    // Knapp for å åpne admin-panel
+    const openButton = document.createElement('button');
+    openButton.id = 'open-admin-btn';
+    openButton.innerHTML = '⚙️';
+    openButton.style.cssText = `
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: #2c3e50;
+      color: white;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      z-index: 9998;
+    `;
+    openButton.addEventListener('click', () => {
+      panel.style.display = 'block';
+      openButton.style.display = 'none';
+    });
+    document.body.appendChild(openButton);
+  }
+
+  // Toggle admin-modus (vis/skjul rediger/slett-knapper)
+  toggleAdminMode() {
+    const adminButtons = document.querySelectorAll('.admin-buttons');
+    const toggleBtn = document.getElementById('toggle-admin-mode');
+    
+    adminButtons.forEach(btn => {
+      if (btn.style.display === 'none' || btn.style.display === '') {
+        btn.style.display = 'flex';
+        toggleBtn.textContent = 'Deaktiver redigeringsmodus';
+        toggleBtn.style.background = '#e74c3c';
+      } else {
+        btn.style.display = 'none';
+        toggleBtn.textContent = 'Aktiver redigeringsmodus';
+        toggleBtn.style.background = '#2c3e50';
+      }
+    });
+  }
+
+  // Vis produktskjema (legg til eller rediger)
+  showProductForm(product = null) {
+    const existingModal = document.getElementById('product-modal');
+    if (existingModal) existingModal.remove();
+
+    const modal = document.createElement('div');
+    modal.id = 'product-modal';
+    modal.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+    `;
+
+    const form = document.createElement('div');
+    form.style.cssText = `
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      max-width: 500px;
+      width: 90%;
+    `;
+
+    form.innerHTML = `
+      <h3 style="margin-bottom: 20px;">${product ? 'Rediger produkt' : 'Nytt produkt'}</h3>
+      <form id="product-form">
+        <div style="margin-bottom: 15px;">
+          <label style="display: block; margin-bottom: 5px;">Produktnavn:</label>
+          <input type="text" id="product-name" value="${product ? product.name : ''}" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px;">
+        </div>
+        <div style="margin-bottom: 15px;">
+          <label style="display: block; margin-bottom: 5px;">Beskrivelse:</label>
+          <input type="text" id="product-desc" value="${product ? product.description : ''}" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px;">
+        </div>
+        <div style="margin-bottom: 15px;">
+          <label style="display: block; margin-bottom: 5px;">Bilde URL:</label>
+          <input type="url" id="product-image" value="${product ? product.image : ''}" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px;">
+        </div>
+        <div style="margin-bottom: 15px;">
+          <label style="display: block; margin-bottom: 5px;">Produkt lenke:</label>
+          <input type="text" id="product-link" value="${product ? product.link : 'gravelbike-V2.html'}" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px;">
+        </div>
+        <div style="display: flex; gap: 10px;">
+          <button type="submit" style="flex: 1; padding: 10px; background: #27ae60; color: white; border: none; border-radius: 5px; cursor: pointer;">
+            ${product ? 'Oppdater' : 'Legg til'}
+          </button>
+          <button type="button" id="cancel-btn" style="flex: 1; padding: 10px; background: #95a5a6; color: white; border: none; border-radius: 5px; cursor: pointer;">
+            Avbryt
+          </button>
+        </div>
+      </form>
+    `;
+
+    modal.appendChild(form);
+    document.body.appendChild(modal);
+
+    // Event listeners
+    document.getElementById('product-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const newProduct = {
+        id: product ? product.id : Date.now(),
+        name: document.getElementById('product-name').value,
+        description: document.getElementById('product-desc').value,
+        image: document.getElementById('product-image').value,
+        link: document.getElementById('product-link').value
+      };
+
+      if (product) {
+        this.updateProduct(newProduct);
+      } else {
+        this.addProduct(newProduct);
+      }
+      modal.remove();
+    });
+
+    document.getElementById('cancel-btn').addEventListener('click', () => {
+      modal.remove();
+    });
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) modal.remove();
+    });
+  }
+
+  // Legg til nytt produkt
+  addProduct(product) {
+    this.products.push(product);
+    this.saveProducts();
+    this.renderProducts();
+    alert('Produkt lagt til!');
+  }
+
+  // Rediger produkt
+  editProduct(id) {
+    const product = this.products.find(p => p.id === id);
+    if (product) {
+      this.showProductForm(product);
+    }
+  }
+
+  // Oppdater produkt
+  updateProduct(updatedProduct) {
+    const index = this.products.findIndex(p => p.id === updatedProduct.id);
+    if (index !== -1) {
+      this.products[index] = updatedProduct;
+      this.saveProducts();
+      this.renderProducts();
+      alert('Produkt oppdatert!');
+    }
+  }
+
+  // Slett produkt
+  deleteProduct(id) {
+    if (confirm('Er du sikker på at du vil slette dette produktet?')) {
+      this.products = this.products.filter(p => p.id !== id);
+      this.saveProducts();
+      this.renderProducts();
+      alert('Produkt slettet!');
+    }
+  }
+}
+
+// Initialiser produktmanager når siden lastes
+let productManager;
+document.addEventListener('DOMContentLoaded', () => {
+  productManager = new ProductManager();
+});
+    </script>
+</body>
+</html>
+
