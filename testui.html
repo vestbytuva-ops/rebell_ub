@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Typewriter</title>
+
+  <style>
+    /* Reset + background */
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Text container */
+    .typewriter {
+      font-family: "Inter", system-ui, -apple-system, sans-serif;
+      font-size: 64px;
+      font-weight: 500;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+    }
+
+    /* Caret */
+    .caret {
+      width: 3px;
+      height: 1.1em;
+      background: #ffffff;
+      margin-left: 6px;
+      animation: blink 3s infinite;
+    }
+
+    @keyframes blink {
+      0%, 50%, 100% {
+        opacity: 1;
+      }
+      25%, 75% {
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="typewriter">
+    <span id="text"></span>
+    <span class="caret"></span>
+  </div>
+
+  <script>
+    const text = "ReBell UB 2026";
+    const speed = 120;
+
+    const el = document.getElementById("text");
+    let index = 0;
+
+    function type() {
+      if (index < text.length) {
+        el.textContent += text.charAt(index);
+        index++;
+        setTimeout(type, speed);
+      }
+    }
+
+    type();
+  </script>
+
+</body>
+</html>

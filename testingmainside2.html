@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ReBell UB</title>
+
+  <link rel="stylesheet" href="rebell_css/style.css">
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    >
+</head>
+
+<body>
+
+<header>
+  <div class="logo">ReBell UB</div>
+  
+  <!-- Desktop Navigation -->
+  <nav>
+    <ul>
+      <li class="dropdown">
+        <a href="#">Hjem</a>
+        <ul class="dropdown-menu">
+          <li><a href="omoss.html">Om oss</a></li>
+          <li><a href="#">Slette</a></li>
+          <li><a href="devside.html">DevSide</a></li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+
+ <header class="hoved-header">
+  <div class="logo">ReBell UB</div>
+  
+  <button class="meny-toggle" id="mobile-menu">
+    <span class="strek"></span>
+    <span class="strek"></span>
+    <span class="strek"></span>
+  </button>
+
+  <nav class="nav-meny">
+    <ul>
+      <li><a href="#">Hjem</a></li>
+      <li><a href="#">Produkter</a></li>
+      <li><a href="#">Om oss</a></li>
+      <li><a href="#">Kontakt</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- Mobile Menu Overlay -->
+<div class="mobile-menu-overlay" id="mobileMenu">
+  <div class="mobile-menu-header">
+    <div class="logo">ReBell UB</div>
+    
+    <button class="close-btn" id="closeBtn">
+      <div class="close-icon"></div>
+    </button>
+  </div>
+
+  <div class="mobile-menu-items">
+    <a href="#">Hjem</a>
+    <a href="omoss.html">Om oss</a>
+    <a href="#">Slette</a>
+    <a href="devside.html">DevSide</a>
+  </div>
+</div>
+
+<section class="hero" id="hjem">
+  <div class="typewriter-container">
+    <div class="typewriter">
+      <span id="type-text"></span>
+      <span class="caret"></span>
+    </div>
+
+    <p class="hero-sub">
+      High-end kettle-bells laget med resirkulerte materialer.
+      Ungdomsbedrift fra Ås videregående skole ®</p>
+      
+    <a href="#utvalg" class="btn">Se utvalget</a>
+  </div>
+</section>
+
+
+<section class="products" id="utvalg">
+  <div class="section-inner">
+    <h2>Vårt utvalg</h2>
+
+    <div class="product-grid">
+      <div class="product-card">
+        <img src="https://fitnessshoppen.no/images/14TUSCL102%202-p.jpg" alt="ReBell 2kg">
+        <h3>ReBell 2kg</h3>
+        <p>Small</p>
+      </div>
+
+      <div class="product-card">
+        <img src="https://fitnessshoppen.no/images/14TUSCL102%202-p.jpg" alt="ReBell 6kg">
+        <h3>ReBell 6kg</h3>
+        <p>Medium</p>
+      </div>
+
+      <div class="product-card">
+        <img src="https://fitnessshoppen.no/images/14TUSCL106-p.jpg" alt="ReBell 10kg">
+        <h3>ReBell 10kg</h3>
+        <p>Large</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="promote">
+  <p>Video av produktet.</p>
+  <iframe
+    width="900"
+    height="400"
+    src="https://www.youtube.com/embed/JYKx8r9l6iM"
+    title="YouTube video player"
+    allowfullscreen>
+  </iframe>
+</div>
+
+<p>
+  Når du kjøper en kettle-bells fra oss, bidrar du til en mer bærekraftig fremtid...
+</p>
+
+<section class="about" id="om-oss">
+  <h2>Om oss</h2>
+  <p>
+    Vi er to nyskjerrige studenter ved Ås videregående skole...
+  </p>
+</section>
+
+<footer>
+  <div class="socials">
+    <a href="#"><i class="fa-brands fa-youtube"></i></a>
+    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+    <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+    <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+  </div>
+
+  <p>ReBell 2025 ©</p>
+</footer>
+
+<!-- PRODUCT MODAL -->
+<div class="product-modal" id="productModal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <img id="modalImage" src="" alt="">
+    <h3 id="modalTitle"></h3>
+    <p id="modalDescription"></p>
+  </div>
+</div>
+
+<script>
+  // Product Modal Script
+  var modal = document.getElementById("productModal");
+
+  document.querySelectorAll(".product-card").forEach(function(card) {
+    card.addEventListener("click", function() {
+      document.getElementById("modalImage").src =
+        card.querySelector("img").src;
+
+      document.getElementById("modalTitle").innerText =
+        card.querySelector("h3").innerText;
+
+      document.getElementById("modalDescription").innerText =
+        card.querySelector("p").innerText;
+
+      modal.classList.add("active");
+    });
+  });
+
+  document.querySelector(".close").onclick = function() {
+    modal.classList.remove("active");
+  };
+
+  // Typewriter Script
+  var text = "ReBell";
+  var speed = 120;
+  var el = document.getElementById("type-text");
+  var index = 0;
+
+  function type() {
+    if (index < text.length) {
+      el.textContent += text.charAt(index);
+      index++;
+      setTimeout(type, speed);
+    }
+  }
+
+  type();
+
+  // Mobile Menu Script
+  var hamburgerBtn = document.getElementById('hamburgerBtn');
+  var closeBtn = document.getElementById('closeBtn');
+  var mobileMenu = document.getElementById('mobileMenu');
+
+  hamburgerBtn.addEventListener('click', function() {
+    mobileMenu.classList.add('open');
+  });
+
+  closeBtn.addEventListener('click', function() {
+    mobileMenu.classList.remove('open');
+  });
+
+  var mobileLinks = document.querySelectorAll('.mobile-menu-items a');
+  for (var i = 0; i < mobileLinks.length; i++) {
+    mobileLinks[i].addEventListener('click', function() {
+      mobileMenu.classList.remove('open');
+    });
+  }
+
+const menuBtn = document.querySelector('#mobile-menu');
+const navMenu = document.querySelector('.nav-meny');
+
+menuBtn.addEventListener('click', () => {
+  navMenu.classList.toggle('aktiv');
+});
+</script>
+
+</body>
+</html>
