@@ -12,49 +12,30 @@ function addItem(name, category, price) {
   console.log(`Lagt til:`, newItem);
 }
 
-// Funksjon for filtrering
-function filterItems({ name, category, minPrice, maxPrice }) {
-  return items.filter(item => {
-    let matches = true;
+// Test firebase
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-analytics.js";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
-    if (name) {
-      matches = matches && item.name.toLowerCase().includes(name.toLowerCase());
-    }
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+    apiKey: "AIzaSyBUtgDsI6KtuQuHhVGg-NnAW0LpahsDAfk",
+    authDomain: "rebell-ub.firebaseapp.com",
+    projectId: "rebell-ub",
+    storageBucket: "rebell-ub.firebasestorage.app",
+    messagingSenderId: "137665480014",
+    appId: "1:137665480014:web:c163f97f817af427af4a1f",
+    measurementId: "G-WYZEPSZZK6"
+  };
 
-    if (category) {
-      matches = matches && item.category.toLowerCase() === category.toLowerCase();
-    }
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+const db = getDatabase(app);
 
-    if (minPrice !== undefined) {
-      matches = matches && item.price >= minPrice;
-    }
+const productRef = ref(db, 'currentProduct');
 
-    if (maxPrice !== undefined) {
-      matches = matches && item.price <= maxPrice;
-    }
-
-    return matches;
-  });
-}
-
-function render(productsToRender) {
-      const container = document.getElementById('productList');
-      container.innerHTML = ''; // Tømmer listen før rendering
-
-      if (productsToRender.length === 0) {
-        container.textContent = "Ingen produkter funnet.";
-        return;
-      }
-
-      productsToRender.forEach(product => {
-        const div = document.createElement('div');
-        div.className = 'product';
-        div.textContent = `${product.name} - ${product.category} - ${product.price} kr`;
-        container.appendChild(div);
-      });
-    }
-
-
-// Eksempel på filtrering
-const filtered = filterItems({ category: "Frukt", minPrice: 10 });
-console.log(filtered);
+const inputField = document.getElementById('prduct-input')
