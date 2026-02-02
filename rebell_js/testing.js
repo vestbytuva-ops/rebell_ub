@@ -2,6 +2,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-analytics.js";
+import {getDatabase, onValue, ref, push, set, remove} from "https://www.gstatic.com/firebasejs/12.8.0/firebase-database.js";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -21,12 +22,12 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const db = getDatabase(app);
-const productRef = ref(db, 'currentProduct');
+const productRef = ref(db, 'products');
 
 
 class ProductManager {
   constructor() {
-    this.products = this.loadProducts();
+    this.loadProducts();
     this.productGrid = document.querySelector('.product-grid');
     this.init();
   }
@@ -72,10 +73,10 @@ class ProductManager {
     card.innerHTML = `
       <img src="${product.image}" alt="${product.name}">
       <h3>${product.name}</h3>
-      <p>${product.discription}</p>
+      <p>${product.description}</p>
       <div class="admin-buttons">
-        <button onclick="productManager.editProduct(${product.id})"</button>
-        <button onclick="productManager.deleteProduct(${product.id})"</button>
+        <button onclick="productManager.editProduct('${product.firebaseId}')">Rediger</button>
+        <button onclick="productManager.deleteProduct('${product.firebaseId}')">Slett</button>
       </div>
     `;
 
@@ -89,14 +90,14 @@ class ProductManager {
   }
 
   editProduct(firebaseId) {
-    const prduct = this.products.find(p => p.firebaseId === firebaseId);
+    const product = this.products.find(p => p.firebaseId === firebaseId);
     if (product) {
       this.showProductForm(product);
     } 
   }
 
   updateProduct(updateProduct) {
-    const id = updatedProduct.firebaseId;
+    const id = updateProduct.firebaseId;
     const dataToSave = {...updateProduct };
     delete dataToSave.firebaseId;
 
@@ -110,19 +111,47 @@ class ProductManager {
     }
   }
 
+  showProductForm(product = null) {
+    const name = prompt(product ? `Rediger navn (nåværende: ${product.name}):` : 'Nytt produktnavn:', product ? product.name : '');
+    if (!name) return;
+    
+    const newProduct = {
+      name: name,
+      image: product?.image || '',
+      description: product?.description || '',
+      link: product?.link || ''
+    };
+    
+    if (product) {
+      this.updateProduct({ ...newProduct, firebaseId: product.firebaseId });
+    } else {
+      this.addProducts(newProduct);
+    }
+  }
+
+  createAdminPanel() {
+    console.log('Admin panel ready');
+  }
 
 }
 
 
-window.ProductManager = new ProductManager();
+window.productManager = new ProductManager();
 
+// Only attach listeners if DOM elements exist
+const inputField = document.getElementById('product-input');
+const updateBtn = document.getElementById('update-btn');
+const display = document.getElementById('display');
 
-const inputField = document.getElementById('prduct-input')
-const updateBtn = document.getElementById('update-btn')
-const display = document.getElementById('display')
-
-updateBtn.addEventListener('click', () => {
-  const newName = inputField.value;
-  set(productRef, newName);
-});
+if (updateBtn && inputField) {
+  updateBtn.addEventListener('click', () => {
+    const newName = inputField.value;
+    if (newName.trim()) {
+      set(productRef, { name: newName });
+      inputField.value = '';
+    }
+  });
+} else {
+  console.warn('Update elements not found in HTML');
+}
 
