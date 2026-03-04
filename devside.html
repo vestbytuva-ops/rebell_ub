@@ -9,19 +9,37 @@
   <div id="app">
     <div class="admin-section">
       <h3>Dev controls</h3>
-      <input type="text" id="product-input" placeholder="Enter product name...">
-      <button id="update-btn">Update for everyone</button>
+      
+      <!-- Quick add (current) -->
+      <div style="margin-bottom: 20px; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+        <h4>Quick Add (Name only)</h4>
+        <input type="text" id="product-input" placeholder="Enter product name...">
+        <button id="update-btn">Quick Add Product</button>
+      </div>
+      
+      <!-- Full product form -->
+      <div style="padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+        <h4>Full Product Form</h4>
+        <input type="text" id="full-name" placeholder="Product name" style="display: block; margin: 5px 0; width: 100%;"><br>
+        <input type="text" id="full-desc" placeholder="Description" style="display: block; margin: 5px 0; width: 100%;"><br>
+        <input type="url" id="full-image" placeholder="Image URL" style="display: block; margin: 5px 0; width: 100%;"><br>
+        <input type="text" id="full-link" placeholder="Product link" style="display: block; margin: 5px 0; width: 100%;"><br>
+        <input type="text" id="full-class" placeholder="CSS class" style="display: block; margin: 5px 0; width: 100%;"><br>
+        <input type="text" id="full-id" placeholder="Element ID" style="display: block; margin: 5px 0; width: 100%;"><br>
+        <button id="full-add-btn">Add Full Product</button>
+      </div>
     </div>
 
     <hr>
 
     <div class="user-section">
       <h3>Current products: </h3>
-      <h1 id="product-display">Loading...</h1>
+      <div class="product-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;"></div>
+      <h1 id="display">Loading...</h1>
     </div>
   </div>
 
-  <script type="model" src="rebell_js/testing.js"></script>
+  <script type="module" src="rebell_js/testing.js"></script>
 </body>
 </html>
 
